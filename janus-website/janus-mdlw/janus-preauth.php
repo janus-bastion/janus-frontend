@@ -4,7 +4,7 @@ include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = mysqli_real_escape_string($connexion, $_POST['username']);
-    $pass = mysqli_real_escape_string($connexion, $_POST['password']); // Pas de hachage
+    $pass = mysqli_real_escape_string($connexion, $_POST['password']); // Pensez à hacher le mot de passe
 
     // Requête préparée
     $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "Inscription réussie!";
-            # header("Location: ../accueil.php");
+            header("Location: ../janus-view/accueil.php");
             exit;
         } else {
             echo "Erreur : Aucune ligne insérée.";
@@ -30,3 +29,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 mysqli_close($connexion);
 ?>
+
