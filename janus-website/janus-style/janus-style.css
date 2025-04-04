@@ -1,0 +1,50 @@
+body {
+            font-family: Arial, sans-serif;
+            background-color: #414856; /* Dark background based on the logo */
+            color: #fff; /* White text color for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #313137; /* Slightly lighter background for the form */
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #CDD6F4; /* Soft blue for heading, matching the logo's theme */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #5684AE; /* Blue color taken from the logo */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #46698C; /* Darker shade of the button color */
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto; /* Center logo above the form */
+            width: 120px; /* Adjust as necessary */
+            height: auto;
+        }
