@@ -4,23 +4,20 @@ include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = mysqli_real_escape_string($connexion, $_POST['username']);
-    $pass = mysqli_real_escape_string($connexion, $_POST['password']);
+    $pass = mysqli_real_escape_string($connexion, $_POST['password']); // Penser ensuite à hacher le mot de passe
 
-    // Requête préparée pour sélectionner l'utilisateur
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
     $stmt = mysqli_prepare($connexion, $sql);
 
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "ss", $user, $pass);
         mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
 
-        if ($result && mysqli_num_rows($result) === 1) {
-            // L'utilisateur existe, redirection
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
             header("Location: ../janus-view/accueil.php");
             exit;
         } else {
-            echo "Nom d'utilisateur ou mot de passe incorrect.";
+            echo "Erreur : Aucune ligne insérée.";
         }
 
         mysqli_stmt_close($stmt);

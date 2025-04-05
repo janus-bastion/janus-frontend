@@ -1,0 +1,94 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de déconnexion - Janus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #414856;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        
+        .logout-container {
+            background-color: #313137;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #F44336;
+            margin-top: 0;
+        }
+        
+        .message {
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+            font-size: 1em;
+        }
+        
+        .btn-logout {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        .btn-logout:hover {
+            background-color: #D32F2F;
+        }
+        
+        .btn-cancel {
+            background-color: #5684AE;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #46698C;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>Confirmation de déconnexion</h1>
+        <div class="message">
+            Êtes-vous sûr de vouloir vous déconnecter du système Janus ?
+        </div>
+        <div class="buttons">
+            <form action="../janus-mdlw/janus-logout.php" method="post">
+                <button type="submit" class="btn btn-logout">Oui, me déconnecter</button>
+            </form>
+            <a href="javascript:history.back()" class="btn btn-cancel">Annuler</a>
+        </div>
+    </div>
+</body>
+</html>
