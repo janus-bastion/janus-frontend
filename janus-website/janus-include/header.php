@@ -9,7 +9,6 @@ session_start();
     <style><?php include("../janus-style/janus-style.css"); ?></style>
 </head>
 <body>
-    <!-- Barre de navigation -->
     <header class="top-nav">
         <div class="nav-left">
             <img src="../janus-logo.png" alt="Logo Janus" class="nav-logo">
@@ -32,6 +31,4 @@ session_start();
             <?php endif; ?>
         </nav>
     </header>
-    
-    <!-- Le contenu principal sera injecté par les pages qui incluent ce header -->
     <main class="main-content">
