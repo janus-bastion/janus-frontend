@@ -1,50 +1,97 @@
 body {
-            font-family: Arial, sans-serif;
-            background-color: #414856; /* Dark background based on the logo */
-            color: #fff; /* White text color for contrast */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: #313137; /* Slightly lighter background for the form */
-            padding: 20px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #CDD6F4; /* Soft blue for heading, matching the logo's theme */
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input[type="text"], input[type="password"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            background-color: #5684AE; /* Blue color taken from the logo */
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        input[type="submit"]:hover {
-            background-color: #46698C; /* Darker shade of the button color */
-        }
-        .logo {
-            display: block;
-            margin: 0 auto 20px auto; /* Center logo above the form */
-            width: 120px; /* Adjust as necessary */
-            height: auto;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #414856;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+}
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #313137;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    box-sizing: border-box;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.nav-logo {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.nav-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.nav-right a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 16px;
+    background-color: #5684AE;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.nav-right a:hover {
+    background-color: #46698C;
+}
+
+.connection-status {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.connected {
+    background-color: #4CAF50;
+}
+
+.disconnected {
+    background-color: #F44336;
+}

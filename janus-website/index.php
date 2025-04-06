@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,7 +9,7 @@
 </head>
 <body>
     <div class="login-container">
-        <img src="janus-logo.png" alt="Janus Logo" class="logo">
+        <img src="janus-logo.png" alt="Janus Logo" class="form-logo">
         <h2>Connexion</h2>
         <form action="janus-mdlw/janus-preauth.php" method="post">
             <input type="text" name="username" placeholder="Nom d'utilisateur" required>
