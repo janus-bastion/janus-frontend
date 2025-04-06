@@ -1,34 +1,34 @@
 <?php
-
-include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
+session_start();
+require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = mysqli_real_escape_string($connexion, $_POST['username']);
     $pass = mysqli_real_escape_string($connexion, $_POST['password']);
 
-    // Requête préparée pour sélectionner l'utilisateur
+    // Préférez password_hash() et password_verify() pour les mots de passe
     $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     $stmt = mysqli_prepare($connexion, $sql);
 
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "ss", $user, $pass);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if ($result && mysqli_num_rows($result) === 1) {
-            // L'utilisateur existe, redirection
-            header("Location: ../janus-view/accueil.php");
-            exit;
-        } else {
-            echo "Nom d'utilisateur ou mot de passe incorrect.";
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+            
+            if ($result && mysqli_num_rows($result) === 1) {
+                $_SESSION['user'] = $user;
+                $_SESSION['last_activity'] = time();
+                header("Location: ../janus-view/home.php");
+                exit;
+            }
         }
-
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "Erreur SQL : " . mysqli_error($connexion);
     }
+    
+    $_SESSION['error'] = "Identifiants incorrects";
+    header("Location: ../index.html");
+    exit;
 }
 
 mysqli_close($connexion);
 ?>
-

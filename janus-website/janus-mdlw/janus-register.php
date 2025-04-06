@@ -1,3 +1,5 @@
+<!-- Revoir !!!!! ->
+
 <?php
 
 include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            header("Location: ../janus-view/accueil.php");
+            header("Location: ../janus-view/home.php");
             exit;
         } else {
             echo "Erreur : Aucune ligne insérée.";
