@@ -11,7 +11,10 @@ session_start();
 <body>
     <header class="top-nav">
         <div class="nav-left">
-            <img src="../janus-logo.png" alt="Logo Janus" class="nav-logo">
+            <!-- Ajout du lien uniquement pour le logo -->
+            <a href="../janus-view/home.php"> <!-- Redirige vers la page d'accueil -->
+                <img src="../janus-logo.png" alt="Logo Janus" class="nav-logo">
+            </a>
             <span class="nav-title">Janus</span>
         </div>
         <nav class="nav-right">
@@ -32,3 +35,4 @@ session_start();
         </nav>
     </header>
     <main class="main-content">
+
