@@ -240,8 +240,10 @@ body {
 }
 .toggle-eye {
     cursor: pointer;
-    font-size: 1.2em;                                                           user-select: none;
+    font-size: 1.2em;                                                           
+    user-select: none;
 }
 
-.connection-details {                                                           margin-top: 10px;
+.connection-details {                                                           
+    margin-top: 10px;
 }
