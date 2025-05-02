@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation de déconnexion - Janus</title>
+    <title>Logout Confirmation - Janus</title>
     <style><?php include("../janus-style/janus-style-logout.css"); ?></style>
 </head>
 <body>
     <div class="logout-container">
-        <h1>Confirmation de déconnexion</h1>
+        <h1>Logout Confirmation</h1>
         <div class="message">
-            Êtes-vous sûr de vouloir vous déconnecter du système Janus ?
+            Are you sure you want to log out from Janus system?
         </div>
         <div class="buttons">
             <form action="../janus-mdlw/janus-logout.php" method="post">
-                <button type="submit" class="btn btn-logout">Oui, me déconnecter</button>
+                <button type="submit" class="btn btn-logout">Yes, log me out</button>
             </form>
-            <a href="javascript:history.back()" class="btn btn-cancel">Annuler</a>
+            <a href="javascript:history.back()" class="btn btn-cancel">Cancel</a>
         </div>
     </div>
 </body>

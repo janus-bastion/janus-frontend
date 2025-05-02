@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (mysqli_stmt_execute($stmt)) {
             $_SESSION['success'] = "Connexion créée avec succès!";
-            // header('Location: ../janus-view/janus-dashboard.php');
+            header('Location: ../janus-view/janus-dashboard.php');
             exit;
         } else {
             $_SESSION['error'] = "Erreur lors de l'insertion : " . mysqli_error($connexion);
-            // header('Location: ../janus-view/janus-create-connect.php');
+            header('Location: ../janus-view/janus-create-connect.php');
             exit;
         }
 

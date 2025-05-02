@@ -9,6 +9,6 @@ if (!isset($_SESSION['user'])) {
 require_once '../janus-include/header.php';
 ?>
 
-Foo bar :)
+Foo bar :), mettre des graphs, des reporting, etc.
 
 <?php require_once '../janus-include/footer.php'; ?>
