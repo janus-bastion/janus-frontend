@@ -3,12 +3,10 @@
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 header('Content-Type: application/json');
 
-// Fonction pour formater la date
 function formatDateLabel($date) {
     return date('d/m/Y', strtotime($date));
 }
 
-// 1. Statistiques des utilisateurs créés par période (7 derniers jours)
 $usersData = [];
 $labels = [];
 for ($i = 6; $i >= 0; $i--) {
@@ -21,7 +19,6 @@ for ($i = 6; $i >= 0; $i--) {
     $usersData[] = (int)$row['count'];
 }
 
-// 2. Répartition des types de connexions
 $connectionTypes = [
     'labels' => ['SSH', 'VNC', 'RDP'],
     'data' => [0, 0, 0]
@@ -37,9 +34,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
 }
 
-// 3. Évolution des connexions créées (7 derniers jours)
 $connectionsOverTime = [
-    'labels' => $labels, // On réutilise les mêmes labels que pour les utilisateurs
+    'labels' => $labels,
     'data' => []
 ];
 
@@ -51,7 +47,6 @@ foreach ($labels as $label) {
     $connectionsOverTime['data'][] = (int)$row['count'];
 }
 
-// Retourner toutes les données en JSON
 echo json_encode([
     'users' => [
         'labels' => $labels,
