@@ -43,5 +43,4 @@ jobs:
         run: |
           curl -Ls https://github.com/fabpot/local-php-security-checker/releases/latest/download/local-php-security-checker_$(uname -s)_$(uname -m) -o phpsec
           chmod +x phpsec
-          ./phpsec
-
+          ./phpsec 
