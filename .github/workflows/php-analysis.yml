@@ -1,0 +1,47 @@
+name: PHP Lint & Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  php-analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install PHP tools
+        run: |
+          composer global require \
+            phpstan/phpstan \
+            squizlabs/php_codesniffer \
+            vimeo/psalm
+
+      - name: Run PHPStan
+        run: |
+          ~/.composer/vendor/bin/phpstan analyse janus-website --level=max
+
+      - name: Run PHP_CodeSniffer (PSR-12)
+        run: |
+          ~/.composer/vendor/bin/phpcs janus-website --standard=PSR12
+
+      - name: Run Psalm Security & Static Analysis
+        run: |
+          ~/.composer/vendor/bin/psalm --init --source=janus-website --level=4 || true
+          ~/.composer/vendor/bin/psalm
+
+      - name: Dependency Security Check (composer.lock)
+        if: ${{ hashFiles('composer.lock') != '' }}
+        run: |
+          curl -Ls https://github.com/fabpot/local-php-security-checker/releases/latest/download/local-php-security-checker_$(uname -s)_$(uname -m) -o phpsec
+          chmod +x phpsec
+          ./phpsec
+
