@@ -19,11 +19,9 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        working-directory: janus-frontend
         run: |
           npm install --save-dev stylelint stylelint-config-standard
 
       - name: Run Stylelint on CSS files
-        working-directory: janus-frontend
         run: |
           npx stylelint "janus-website/**/*.css"
