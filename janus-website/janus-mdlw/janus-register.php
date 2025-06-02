@@ -1,37 +1,69 @@
 <?php
-// Connexion à la base de données
+session_start();
 include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
-// Vérifie que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Échappement des données utilisateur
     $username = mysqli_real_escape_string($connexion, $_POST['username']);
     $email = mysqli_real_escape_string($connexion, $_POST['email']);
-    // Hachage sécurisé du mot de passe
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Préparation de la requête SQL
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($connexion, $sql);
+    // Vérifier si le nom d'utilisateur existe déjà
+    $checkUserSql = "SELECT id FROM users WHERE username = ?";
+    $checkUserStmt = mysqli_prepare($connexion, $checkUserSql);
 
-    if ($stmt) {
-        // Liaison des paramètres
-        mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
-        $success = mysqli_stmt_execute($stmt);
+    if ($checkUserStmt) {
+        mysqli_stmt_bind_param($checkUserStmt, "s", $username);
+        mysqli_stmt_execute($checkUserStmt);
+        mysqli_stmt_store_result($checkUserStmt);
 
-        if ($success && mysqli_stmt_affected_rows($stmt) > 0) {
-            // Redirection si succès
+        if (mysqli_stmt_num_rows($checkUserStmt) > 0) {
+            $_SESSION['register_error'] = "Ce nom d'utilisateur est déjà utilisé.";
+            header("Location: ../janus-view/janus-register.php");
+            exit;
+        }
+        mysqli_stmt_close($checkUserStmt);
+    }
+
+    // Vérifier si l'email existe déjà
+    $checkEmailSql = "SELECT id FROM users WHERE email = ?";
+    $checkEmailStmt = mysqli_prepare($connexion, $checkEmailSql);
+
+    if ($checkEmailStmt) {
+        mysqli_stmt_bind_param($checkEmailStmt, "s", $email);
+        mysqli_stmt_execute($checkEmailStmt);
+        mysqli_stmt_store_result($checkEmailStmt);
+
+        if (mysqli_stmt_num_rows($checkEmailStmt) > 0) {
+            $_SESSION['register_error'] = "Cet email est déjà utilisé.";
+            header("Location: ../janus-view/janus-register.php");
+            exit;
+        }
+        mysqli_stmt_close($checkEmailStmt);
+    }
+
+    // Insérer le nouvel utilisateur
+    $insertSql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    $insertStmt = mysqli_prepare($connexion, $insertSql);
+
+    if ($insertStmt) {
+        mysqli_stmt_bind_param($insertStmt, "sss", $username, $email, $password);
+        $success = mysqli_stmt_execute($insertStmt);
+
+        if ($success && mysqli_stmt_affected_rows($insertStmt) > 0) {
+            unset($_SESSION['register_error']);
             header("Location: ../janus-view/home.php");
             exit;
         } else {
-            // Gestion des erreurs (par ex. doublon)
-            echo "<div style='color: red; padding: 20px; font-weight: bold;'>Erreur : Le nom d'utilisateur ou l'email est peut-être déjà utilisé.</div>";
+            $_SESSION['register_error'] = "Une erreur est survenue lors de l'inscription.";
+            header("Location: ../janus-view/janus-register.php");
+            exit;
         }
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($insertStmt);
     } else {
-        // Erreur SQL
-        echo "<div style='color: red; padding: 20px; font-weight: bold;'>Erreur SQL : " . mysqli_error($connexion) . "</div>";
+        $_SESSION['register_error'] = "Erreur SQL : " . mysqli_error($connexion);
+        header("Location: ../janus-view/janus-register.php");
+        exit;
     }
 }
 
