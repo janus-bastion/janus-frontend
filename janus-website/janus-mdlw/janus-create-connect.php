@@ -8,8 +8,6 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-## Récup speed de l'ID
-
 $username = $_SESSION['user'];
 $query = "SELECT id FROM users WHERE username = ?";
 if ($stmt = mysqli_prepare($connexion, $query)) {
@@ -46,6 +44,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // ✅ Vérification si le nom de connexion existe déjà pour cet utilisateur
+    $check_sql = "SELECT id FROM remote_connections WHERE user_id = ? AND name = ?";
+    $check_stmt = mysqli_prepare($connexion, $check_sql);
+    mysqli_stmt_bind_param($check_stmt, "is", $user_id, $connection_name);
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
+
+    if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        $_SESSION['error'] = "Une connexion avec ce nom existe déjà.";
+        mysqli_stmt_close($check_stmt);
+        header('Location: ../janus-view/janus-create-connect.php');
+        exit;
+    }
+    mysqli_stmt_close($check_stmt);
+
     $sql = "INSERT INTO remote_connections (user_id, name, protocol, host, port, username, password)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -68,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ../janus-view/janus-create-connect.php');
         exit;
     }
-
 } else {
     header('Location: ../janus-view/janus-create-connect.php');
     exit;
@@ -76,3 +88,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 mysqli_close($connexion);
 ?>
+

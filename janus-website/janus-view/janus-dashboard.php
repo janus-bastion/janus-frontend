@@ -9,6 +9,17 @@ if (!isset($_SESSION['user'])) {
 require_once '../janus-include/header.php';
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
+?>
+<style>
+    body {
+        background-color: #414856 !important;
+        min-height: 100vh;
+        margin: 0;
+    }
+</style>
+
+<?php
+
 $username = $_SESSION['user'];
 
 // Get user ID
@@ -69,11 +80,11 @@ if ($stmt = mysqli_prepare($connexion, $query)) {
                     </div>
                     
                     <div class="connection-details" style="display: none;">
-                        <p><strong>Protocol:</strong> <?= htmlspecialchars($conn['protocol']) ?></p>
-                        <p><strong>IP Address:</strong> <?= htmlspecialchars($conn['host']) ?></p>
-                        <p><strong>Port:</strong> <?= htmlspecialchars($conn['port']) ?></p>
-                        <p><strong>Username:</strong> <?= htmlspecialchars($conn['username']) ?></p>
-                        <p><small>Added on <?= htmlspecialchars($conn['created_at']) ?></small></p>
+                        <p style="color: white;"><strong>Protocol:</strong> <?= htmlspecialchars($conn['protocol']) ?></p>
+                        <p style="color: white;"><strong>IP Address:</strong> <?= htmlspecialchars($conn['host']) ?></p>
+                        <p style="color: white;"><strong>Port:</strong> <?= htmlspecialchars($conn['port']) ?></p>
+                        <p style="color: white;"><strong>Username:</strong> <?= htmlspecialchars($conn['username']) ?></p>
+                        <p style="color: white;"><small>Added on <?= htmlspecialchars($conn['created_at']) ?></small></p>
                     </div>
                     
                     <a href="connect.php?id=<?= $conn['id'] ?>" class="connect-button" title="Connect">
