@@ -20,10 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd janus-frontend
-          npm install stylelint stylelint-config-standard --save-dev
+          npm install --prefix janus-frontend --save-dev stylelint stylelint-config-standard
 
       - name: Run Stylelint on CSS files
         run: |
-          cd janus-frontend
-          npx stylelint "janus-website/**/*.css"
+          npx --prefix janus-frontend stylelint "janus-frontend/janus-website/**/*.css"
