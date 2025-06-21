@@ -14,7 +14,7 @@ if (strlen($password_raw) < 14 ||
     !preg_match('/[!@#$%^&*(),.?\":{}|<>]/', $password_raw)) {
 
     $_SESSION['register_error'] = "Le mot de passe doit contenir au moins 14 caractères, une majuscule, un chiffre et un caractère spécial.";
-    header("Location: ../janus-view/janus-register.php");
+    header("Location: /register");
     exit;
 }
 
