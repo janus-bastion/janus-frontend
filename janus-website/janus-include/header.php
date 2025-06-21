@@ -13,7 +13,7 @@ session_start();
     <header class="top-nav">
         <div class="nav-left">
             <!-- Logo link only -->
-            <a href="/home"> <!-- Redirects to home page -->
+            <a href="/home">
                 <img src="janus-logo.png" alt="Janus Logo" class="nav-logo">
             </a>
             <span class="nav-title">Janus</span>
@@ -24,6 +24,9 @@ session_start();
                     <a href="/register">New user</a>
                     <a href="/newconnect">New connection</a>
                     <a href="/dashboard">Dashboard</a>
+                    <?php if ($_SESSION['is_admin'] ?? false): ?>
+                        <a href="/manage-users">Gestion Admins</a>
+                    <?php endif; ?>
                     <a href="/logout">Logout</a>
                 </div>
                 <span class="connection-status connected">
