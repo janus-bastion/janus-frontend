@@ -93,6 +93,29 @@
 
 - [![Chart JS](https://img.shields.io/badge/Chart%20js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)  
 
+## API
+
+This frontend also exposes several API endpoints to retrieve data directly from the backend:
+
+- `/api/users/count` — Returns the total number of users.
+- `/api/remote_connections/count` — Returns the total number of remote connections.
+- `/api/user/{username}` — Returns detailed information about a specific user by username.
+
+### Authentication
+
+All API endpoints require **HTTP Basic Authentication** with a valid username and password.
+
+- Only users with **admin privileges** (`is_admin` set to true in the database) are authorized to access the APIs.
+- If authentication fails, or if the user is not an admin, the API will respond with a `403 Forbidden` status.
+
+### Example usage with `curl` :
+
+```bash
+curl -k -u admin_username:admin_password https://your-domain-or-ip/api/users/count
+```
+
+Replace `admin_username` and `admin_password` with the credentials of a valid admin user.
+
 ## Notes
 
 - This frontend is designed to be lightweight and easily deployable inside containerized environments or directly on a server.
