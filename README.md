@@ -111,7 +111,9 @@ All API endpoints require **HTTP Basic Authentication** with a valid username an
 ### Example usage with `curl` :
 
 ```bash
-curl -k -u admin_username:admin_password https://your-domain-or-ip/api/users/count
+curl -k -u admin_username:admin_password https://HAPROXY_IP/api/users/count
+curl -k -u admin_username:admin_password https://HAPROXY_IP/api/connections/count
+curl -k -u admin_username:admin_password https://HAPROXY_IP/api/user/{user}
 ```
 
 Replace `admin_username` and `admin_password` with the credentials of a valid admin user.
