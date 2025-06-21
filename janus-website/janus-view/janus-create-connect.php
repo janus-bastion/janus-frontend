@@ -22,7 +22,7 @@ require_once '../janus-include/header.php';
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
-        <form action="../janus-mdlw/janus-create-connect.php" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+        <form action="/newconnectprocess" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
             <input type="text" name="connection_name" placeholder="Connection name" required style="padding: 10px; border-radius: 6px; border: none;">
 
             <select name="protocol" required style="padding: 10px; border-radius: 6px; border: none; color: #555;">

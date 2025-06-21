@@ -12,7 +12,7 @@
             Are you sure you want to log out from Janus system?
         </div>
         <div class="buttons">
-            <form action="../janus-mdlw/janus-logout.php" method="post">
+            <form action="/logoutprocess" method="post">
                 <button type="submit" class="btn btn-logout">Yes, log me out</button>
             </form>
             <a href="javascript:history.back()" class="btn btn-cancel">Cancel</a>

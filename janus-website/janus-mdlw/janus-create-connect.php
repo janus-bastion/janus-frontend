@@ -3,8 +3,8 @@ session_start();
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
 if (!isset($_SESSION['user'])) {
-    $_SESSION['error'] = "Vous devez être connecté pour ajouter une connexion distante.";
-    header("Location: ../janus-view/home.php");
+    $_SESSION['error'] = "You must be logged in to add a remote connection.";
+    header("Location: /home");
     exit;
 }
 
@@ -18,13 +18,13 @@ if ($stmt = mysqli_prepare($connexion, $query)) {
     mysqli_stmt_close($stmt);
 
     if (empty($user_id)) {
-        $_SESSION['error'] = "Utilisateur introuvable dans la base de données.";
-        header("Location: ../janus-view/home.php");
+        $_SESSION['error'] = "User not found in the database.";
+        header("Location: /home");
         exit;
     }
 } else {
-    $_SESSION['error'] = "Erreur de requête : " . mysqli_error($connexion);
-    header("Location: ../janus-view/home.php");
+    $_SESSION['error'] = "Request error : " . mysqli_error($connexion);
+    header("Location: /home");
     exit;
 }
 
@@ -44,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // ✅ Vérification si le nom de connexion existe déjà pour cet utilisateur
     $check_sql = "SELECT id FROM remote_connections WHERE user_id = ? AND name = ?";
     $check_stmt = mysqli_prepare($connexion, $check_sql);
     mysqli_stmt_bind_param($check_stmt, "is", $user_id, $connection_name);
@@ -52,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_store_result($check_stmt);
 
     if (mysqli_stmt_num_rows($check_stmt) > 0) {
-        $_SESSION['error'] = "Une connexion avec ce nom existe déjà.";
+        $_SESSION['error'] = "A connection with this name already exists.";
         mysqli_stmt_close($check_stmt);
-        header('Location: ../janus-view/janus-create-connect.php');
+        header('Location: /newconnect');
         exit;
     }
     mysqli_stmt_close($check_stmt);
@@ -66,23 +65,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($stmt, "isssiss", $user_id, $connection_name, $protocol, $ip_address, $port, $username_conn, $password);
 
         if (mysqli_stmt_execute($stmt)) {
-            $_SESSION['success'] = "Connexion créée avec succès!";
-            header('Location: ../janus-view/janus-dashboard.php');
+            $_SESSION['success'] = "Connection successfully created!";
+            header('Location: /dashboard');
             exit;
         } else {
-            $_SESSION['error'] = "Erreur lors de l'insertion : " . mysqli_error($connexion);
-            header('Location: ../janus-view/janus-create-connect.php');
+            $_SESSION['error'] = "Error during insertion : " . mysqli_error($connexion);
+            header('Location: /newconnect');
             exit;
         }
 
         mysqli_stmt_close($stmt);
     } else {
-        $_SESSION['error'] = "Erreur de préparation de la requête : " . mysqli_error($connexion);
-        header('Location: ../janus-view/janus-create-connect.php');
+        $_SESSION['error'] = "Error preparing the query : " . mysqli_error($connexion);
+        header('Location: /newconnect');
         exit;
     }
 } else {
-    header('Location: ../janus-view/janus-create-connect.php');
+    header('Location: /newconnect');
     exit;
 }
 

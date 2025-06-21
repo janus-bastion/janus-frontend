@@ -22,7 +22,6 @@ if (strlen($password_raw) < 14 ||
 $password = password_hash($password_raw, PASSWORD_DEFAULT);
 
 
-    // Vérifier si le nom d'utilisateur existe déjà
     $checkUserSql = "SELECT id FROM users WHERE username = ?";
     $checkUserStmt = mysqli_prepare($connexion, $checkUserSql);
 
@@ -32,14 +31,13 @@ $password = password_hash($password_raw, PASSWORD_DEFAULT);
         mysqli_stmt_store_result($checkUserStmt);
 
         if (mysqli_stmt_num_rows($checkUserStmt) > 0) {
-            $_SESSION['register_error'] = "Ce nom d'utilisateur est déjà utilisé.";
-            header("Location: ../janus-view/janus-register.php");
+            $_SESSION['register_error'] = "This username is already taken.";
+            header("Location: /register");
             exit;
         }
         mysqli_stmt_close($checkUserStmt);
     }
 
-    // Vérifier si l'email existe déjà
     $checkEmailSql = "SELECT id FROM users WHERE email = ?";
     $checkEmailStmt = mysqli_prepare($connexion, $checkEmailSql);
 
@@ -49,14 +47,13 @@ $password = password_hash($password_raw, PASSWORD_DEFAULT);
         mysqli_stmt_store_result($checkEmailStmt);
 
         if (mysqli_stmt_num_rows($checkEmailStmt) > 0) {
-            $_SESSION['register_error'] = "Cet email est déjà utilisé.";
-            header("Location: ../janus-view/janus-register.php");
+            $_SESSION['register_error'] = "This email is already in use.";
+            header("Location: /register");
             exit;
         }
         mysqli_stmt_close($checkEmailStmt);
     }
 
-    // Insérer le nouvel utilisateur
     $insertSql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
     $insertStmt = mysqli_prepare($connexion, $insertSql);
 
@@ -66,18 +63,18 @@ $password = password_hash($password_raw, PASSWORD_DEFAULT);
 
         if ($success && mysqli_stmt_affected_rows($insertStmt) > 0) {
             unset($_SESSION['register_error']);
-            header("Location: ../janus-view/home.php");
+            header("Location: /home");
             exit;
         } else {
-            $_SESSION['register_error'] = "Une erreur est survenue lors de l'inscription.";
-            header("Location: ../janus-view/janus-register.php");
+            $_SESSION['register_error'] = "An error occurred during registration.";
+            header("Location: /register");
             exit;
         }
 
         mysqli_stmt_close($insertStmt);
     } else {
-        $_SESSION['register_error'] = "Erreur SQL : " . mysqli_error($connexion);
-        header("Location: ../janus-view/janus-register.php");
+        $_SESSION['register_error'] = "SQL Error : " . mysqli_error($connexion);
+        header("Location: /register");
         exit;
     }
 }

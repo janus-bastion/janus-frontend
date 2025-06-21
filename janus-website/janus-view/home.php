@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: ../index.php");
+    header("Location: /login");
     exit;
 }
 
@@ -53,7 +53,7 @@ require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('get-stats.php')
+    fetch('/stats')
         .then(response => response.json())
         .then(data => {
             const commonOptions = {
