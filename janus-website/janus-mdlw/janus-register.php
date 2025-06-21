@@ -5,7 +5,22 @@ include '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = mysqli_real_escape_string($connexion, $_POST['username']);
     $email = mysqli_real_escape_string($connexion, $_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password_raw = $_POST['password'];
+
+// Politique de mot de passe
+if (strlen($password_raw) < 14 ||
+    !preg_match('/[A-Z]/', $password_raw) ||
+    !preg_match('/[0-9]/', $password_raw) ||
+    !preg_match('/[!@#$%^&*(),.?\":{}|<>]/', $password_raw)) {
+
+    $_SESSION['register_error'] = "Le mot de passe doit contenir au moins 14 caractères, une majuscule, un chiffre et un caractère spécial.";
+    header("Location: ../janus-view/janus-register.php");
+    exit;
+}
+
+// Hachage après validation
+$password = password_hash($password_raw, PASSWORD_DEFAULT);
+
 
     // Vérifier si le nom d'utilisateur existe déjà
     $checkUserSql = "SELECT id FROM users WHERE username = ?";
