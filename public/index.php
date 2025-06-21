@@ -70,6 +70,7 @@ $app->get('/register', function (Request $request, Response $response, $args) {
     return $response;
 });
 
+
 $app->get('/manage-users', function (Request $request, Response $response, $args) {
     $file = '/usr/share/nginx/html/janus-view/janus-manage-users.php';
     ob_start();
@@ -124,6 +125,40 @@ $app->post('/newconnectprocess', function (Request $request, Response $response,
     $output = ob_get_clean();
     $response->getBody()->write($output);
     return $response;
+});
+
+# ----------------------- #
+
+$app->get('/api/users/count', function (Request $request, Response $response, $args) {
+
+        $fich = '/usr/share/nginx/html/janus-api/count_users.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
+});
+
+$app->get('/api/connections/count', function (Request $request, Response $response, $args) {
+
+        $fich = '/usr/share/nginx/html/janus-api/count_connections.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
+});
+
+$app->get('/api/user/{username}', function (Request $request, Response $response, $args) {
+
+	$_GET['username'] = $args['username'];
+
+        $fich = '/usr/share/nginx/html/janus-api/api_user.php';
+        ob_start();
+        include($fich);
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+	return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->run();
