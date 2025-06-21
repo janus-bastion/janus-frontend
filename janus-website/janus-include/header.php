@@ -13,18 +13,18 @@ session_start();
     <header class="top-nav">
         <div class="nav-left">
             <!-- Logo link only -->
-            <a href="../janus-view/home.php"> <!-- Redirects to home page -->
-                <img src="../janus-logo.png" alt="Janus Logo" class="nav-logo">
+            <a href="/home"> <!-- Redirects to home page -->
+                <img src="janus-logo.png" alt="Janus Logo" class="nav-logo">
             </a>
             <span class="nav-title">Janus</span>
         </div>
         <nav class="nav-right">
             <?php if (isset($_SESSION['user'])): ?>
                 <div class="nav-buttons">
-                    <a href="janus-register.php">New user</a>
-                    <a href="janus-create-connect.php">New connection</a>
-                    <a href="janus-dashboard.php">Dashboard</a>
-                    <a href="janus-logout.php">Logout</a>
+                    <a href="/register">New user</a>
+                    <a href="/newconnect">New connection</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/logout">Logout</a>
                 </div>
                 <span class="connection-status connected">
                     <?= htmlspecialchars($_SESSION['user']) ?> connected

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: ../index.php");
+    header("Location: /login");
     exit;
 }
 
@@ -33,12 +33,12 @@ if ($stmt = mysqli_prepare($connexion, $query)) {
 
     if (empty($userId)) {
         $_SESSION['error'] = "User not found in database.";
-        header("Location: ../janus-view/home.php");
+        header("Location: /home");
         exit;
     }
 } else {
     $_SESSION['error'] = "Query error: " . mysqli_error($connexion);
-    header("Location: ../janus-view/home.php");
+    header("Location: /home");
     exit;
 }
 

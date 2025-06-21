@@ -23,7 +23,7 @@ require_once '../janus-include/header.php';
             <?php unset($_SESSION['register_error']); ?>
         <?php endif; ?>
 
-        <form action="../janus-mdlw/janus-register.php" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+        <form action="/registerprocess" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
             <input type="text" name="username" placeholder="Username" required style="padding: 10px; border-radius: 6px; border: none;">
             <input type="email" name="email" placeholder="Email" required style="padding: 10px; border-radius: 6px; border: none;">
             <input type="password" name="password" placeholder="Password" required style="padding: 10px; border-radius: 6px; border: none;">
