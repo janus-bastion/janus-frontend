@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = mysqli_real_escape_string($connexion, $_POST['username_or_email']);
     $pass = mysqli_real_escape_string($connexion, $_POST['password']);
 
+    // Tentative avec username
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = mysqli_prepare($connexion, $sql);
 
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (password_verify($pass, $stored_hash)) {
                     $_SESSION['user'] = $row['username'];
+                    $_SESSION['is_admin'] = (bool)$row['is_admin'];
                     $_SESSION['last_activity'] = time();
                     header("Location: /home");
                     exit;
@@ -33,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // Tentative avec email
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = mysqli_prepare($connexion, $sql);
 
@@ -48,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (password_verify($pass, $stored_hash)) {
                     $_SESSION['user'] = $row['username'];
+                    $_SESSION['is_admin'] = (bool)$row['is_admin'];
                     $_SESSION['last_activity'] = time();
                     header("Location: /home");
                     exit;
