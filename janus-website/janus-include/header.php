@@ -25,7 +25,7 @@ session_start();
                     <a href="/newconnect">New connection</a>
                     <a href="/dashboard">Dashboard</a>
                     <?php if ($_SESSION['is_admin'] ?? false): ?>
-                        <a href="/manage-users">Gestion Admins</a>
+                        <a href="/manage-users">Admin Management</a>
                     <?php endif; ?>
                     <a href="/logout">Logout</a>
                 </div>
@@ -40,3 +40,4 @@ session_start();
         </nav>
     </header>
     <main class="main-content">
+
