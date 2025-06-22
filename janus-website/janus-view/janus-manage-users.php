@@ -9,7 +9,7 @@ if (!isset($_SESSION['user']) || !($_SESSION['is_admin'] ?? false)) {
 require_once '../janus-include/header.php';
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
-// Traitement du formulaire d'update
+// Handle update form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     $user_id = (int) $_POST['user_id'];
     $new_is_admin = isset($_POST['is_admin']) ? 1 : 0;
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     exit;
 }
 
-// Récupérer tous les utilisateurs
+// Fetch all users
 $users = [];
 $result = $connexion->query("SELECT id, username, email, is_admin FROM users");
 if ($result) {
@@ -86,7 +86,7 @@ if ($result) {
     }
 </style>
 
-<h1>Gestion des administrateurs</h1>
+<h1>Administrator Management</h1>
 
 <div class="cards-grid">
     <?php foreach ($users as $user): ?>
@@ -96,15 +96,16 @@ if ($result) {
                 <div class="card-header">
                     <h2><?= htmlspecialchars($user['username']) ?></h2>
                     <label>
-                        Admin ?
+                        Admin?
                         <input type="checkbox" class="admin-checkbox" name="is_admin" <?= $user['is_admin'] ? 'checked' : '' ?>>
                     </label>
                 </div>
-                <p>Email : <?= htmlspecialchars($user['email']) ?></p>
-                <button type="submit" class="submit-btn">Mettre à jour</button>
+                <p>Email: <?= htmlspecialchars($user['email']) ?></p>
+                <button type="submit" class="submit-btn">Update</button>
             </form>
         </div>
     <?php endforeach; ?>
 </div>
 
 <?php require_once '../janus-include/footer.php'; ?>
+

@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: {
                     labels: data.users.labels,
                     datasets: [{
-                        label: 'Utilisateurs créés',
+                        label: 'Users created (7 days)',
                         data: data.users.data,
                         backgroundColor: 'rgba(0, 191, 255, 0.7)',
                         borderColor: 'rgba(0, 191, 255, 1)',
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ...commonOptions.plugins,
                         title: {
                             ...commonOptions.plugins.title,
-                            text: 'Utilisateurs créés (7 jours)'
+                            text: 'Users created (7 days)'
                         }
                     }
                 }
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ...commonOptions.plugins,
                         title: {
                             ...commonOptions.plugins.title,
-                            text: 'Types de connexions'
+                            text: 'Connection types'
                         },
                         legend: {
                             ...commonOptions.plugins.legend,
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: {
                     labels: data.connectionsOverTime.labels,
                     datasets: [{
-                        label: 'Connexions créées',
+                        label: 'Connections created (7 days)',
                         data: data.connectionsOverTime.data,
                         fill: false,
                         backgroundColor: 'rgba(255, 140, 0, 0.8)',
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ...commonOptions.plugins,
                         title: {
                             ...commonOptions.plugins.title,
-                            text: 'Connexions créées (7 jours)'
+                            text: 'Connections created (7 days)'
                         }
                     }
                 }
