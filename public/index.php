@@ -89,6 +89,26 @@ $app->post('/manage-users', function (Request $request, Response $response, $arg
     return $response;
 });
 
+
+$app->get('/2faverif', function (Request $request, Response $response, $args) {
+    $file = '/usr/share/nginx/html/janus-view/totp.php';
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+    return $response;
+});
+
+
+$app->post('/2faverifuser', function (Request $request, Response $response, $args) {
+    $file = '/usr/share/nginx/html/janus-mdlw/janus-totp-verify.php';
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+    return $response;
+});
+
 # ----------------------- #
 
 $app->post('/preauthprocess', function (Request $request, Response $response, $args) {
@@ -160,5 +180,7 @@ $app->get('/api/user/{username}', function (Request $request, Response $response
         $response->getBody()->write($output);
 	return $response->withHeader('Content-Type', 'application/json');
 });
+
+
 
 $app->run();

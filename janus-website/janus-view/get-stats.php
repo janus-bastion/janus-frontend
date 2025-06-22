@@ -1,10 +1,5 @@
 <?php
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /login');
-    exit();
-}
-
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 header('Content-Type: application/json');
 
