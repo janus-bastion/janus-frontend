@@ -1,8 +1,14 @@
 <?php
 session_start();
-require_once '../janus-include/header.php';
-?>
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /login');
+    exit();
+}
+
+require_once '../janus-include/header.php';
+
+?>
 <style>
     body {
         background-color: #414856 !important;
