@@ -1,10 +1,11 @@
 <?php
+$env = parse_ini_file(__DIR__ . '/.env');
 
-$host = 'janus-mysql';  // Le nom du serveur
-$username = 'root';      // L'utilisateur de la base de données
-$password = 'root';      // Le mot de passe de l'utilisateur
-$dbname = 'janus_db';  // Le nom de la base de données
-$port = 3306;            // Le port utilisé par MySQL
+$host = $env['DB_HOST'];
+$port = $env['DB_PORT'];
+$dbname = $env['DB_NAME'];
+$username = $env['DB_USER'];
+$password = $env['DB_PASS'];
 
 $connexion = mysqli_connect($host, $username, $password, $dbname, $port);
 
@@ -12,3 +13,4 @@ if (!$connexion) {
     die('Erreur de connexion : ' . mysqli_connect_error());
 }
 ?>
+
