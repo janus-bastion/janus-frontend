@@ -1,6 +1,5 @@
 <?php
 
-// Load environment variables from .env file
 function loadEnv($filePath) {
     if (!file_exists($filePath)) {
         throw new Exception("Environment file not found: " . $filePath);
@@ -9,7 +8,7 @@ function loadEnv($filePath) {
     $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) {
-            continue; // Skip comments
+            continue;
         }
         
         list($name, $value) = explode('=', $line, 2);
@@ -22,10 +21,8 @@ function loadEnv($filePath) {
     }
 }
 
-// Load the .env file
 loadEnv(__DIR__ . '/.env');
 
-// Configuration des serveurs avec leurs identifiants respectifs depuis .env
 $servers = [
     [
         'host' => $_ENV['DB_PRIMARY_HOST'],
@@ -50,8 +47,6 @@ $last_error = '';
 
 foreach ($servers as $server) {
     try {
-        // Attempt connection with server-specific credentials
-        // Suppress DNS resolution warnings during failover
         $connexion = @mysqli_connect(
             $server['host'], 
             $server['username'], 
@@ -60,20 +55,17 @@ foreach ($servers as $server) {
             $server['port']
         );
         if ($connexion) {
-            // Connection successful, exit the loop
             error_log("Connection successful to server: " . $server['description'] . " (" . $server['host'] . ")");
             break;
         }
     } catch (mysqli_sql_exception $e) {
         $last_error = $e->getMessage();
         error_log("Connection failed to server " . $server['description'] . " (" . $server['host'] . "): " . $last_error);
-        continue; // Try next server
+        continue;
     }
 }
 
 if (!$connexion) {
-    // If no connection could be established after trying both servers
     die('Connection error: Unable to connect to database. Both primary and replication servers are unavailable. Last error: ' . $last_error);
 }
 ?>
-
