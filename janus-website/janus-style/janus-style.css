@@ -162,7 +162,7 @@ body {
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 40px;
     max-width: 960px;
     margin: 0 auto;
 }
@@ -170,8 +170,8 @@ body {
 .connection-card {
     background-color: #2f3640;
     border-radius: 10px;
-    padding: 20px;
-    width: 250px;
+    padding: 15px;
+    width: 320px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-align: left;
 }
@@ -237,6 +237,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
+    overflow: hidden;
 }
 .toggle-eye {
     cursor: pointer;
@@ -246,5 +248,63 @@ body {
 
 .connection-details {                                                           
     margin-top: 10px;
+}
+
+.admin-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.submit-btn,
+.delete-btn,
+.confirm-delete-btn {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.confirm-delete-btn {
+    background-color: #c0392b;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #992d22;
+}
+
+.hidden {
+    display: none;
 }
 
