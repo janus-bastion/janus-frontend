@@ -20,10 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (password_verify($pass, $user['password'])) {
             $_SESSION['user'] = $user['username'];
+	    $_SESSION['is_admin'] = (int) $user['is_admin'];
 
-            // Bypass TOTP for janusadmin
-            if ($user['username'] === 'janusadmin') {
-                header("Location: /home");
+	    if ($user['username'] === 'janusadmin') {
+		$_SESSION['is_admin'] = 1;
+    		header("Location: /home");
                 exit;
             }
 

@@ -12,7 +12,6 @@ session_start();
 <body>
     <header class="top-nav">
         <div class="nav-left">
-            <!-- Logo link only -->
             <a href="/home">
                 <img src="janus-logo.png" alt="Janus Logo" class="nav-logo">
             </a>
@@ -21,12 +20,12 @@ session_start();
         <nav class="nav-right">
             <?php if (isset($_SESSION['user'])): ?>
                 <div class="nav-buttons">
-                    <a href="/register">New user</a>
-                    <a href="/newconnect">New connection</a>
-                    <a href="/dashboard">Dashboard</a>
-                    <?php if ($_SESSION['is_admin'] ?? false): ?>
+                    <?php if (!empty($_SESSION['is_admin'])): ?>
+                        <a href="/register">New user</a>
+                        <a href="/newconnect">New connection</a>
                         <a href="/manage-users">Admin Management</a>
                     <?php endif; ?>
+                    <a href="/dashboard">Dashboard</a>
                     <a href="/logout">Logout</a>
                 </div>
                 <span class="connection-status connected">
