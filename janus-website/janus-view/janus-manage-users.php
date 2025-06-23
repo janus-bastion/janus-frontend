@@ -9,11 +9,20 @@ if (!isset($_SESSION['user']) || !($_SESSION['is_admin'] ?? false)) {
 require_once '../janus-include/header.php';
 require_once '/home/janus-storage/janus-db-connect/janus-db-connection.php';
 
-// Handle update form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     $user_id = (int) $_POST['user_id'];
-    $new_is_admin = isset($_POST['is_admin']) ? 1 : 0;
 
+    if (isset($_POST['action']) && $_POST['action'] === 'delete') {
+        $stmt = $connexion->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: /manage-users");
+        exit;
+    }
+
+    $new_is_admin = isset($_POST['is_admin']) ? 1 : 0;
     $stmt = $connexion->prepare("UPDATE users SET is_admin = ? WHERE id = ?");
     $stmt->bind_param("ii", $new_is_admin, $user_id);
     $stmt->execute();
@@ -23,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
     exit;
 }
 
-// Fetch all users
 $users = [];
 $result = $connexion->query("SELECT id, username, email, is_admin FROM users");
 if ($result) {
@@ -34,59 +42,7 @@ if ($result) {
 }
 ?>
 
-<style>
-    body {
-        background-color: #414856 !important;
-        min-height: 100vh;
-        margin: 0;
-        padding: 1em;
-        font-family: Arial, sans-serif;
-        color: white;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 1.5em;
-    }
-    .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5em;
-    }
-    .connection-card {
-        background-color: #2e323f;
-        border-radius: 8px;
-        padding: 1.2em;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1em;
-    }
-    .card-header h2 {
-        font-size: 1.2em;
-        margin: 0;
-    }
-    .admin-checkbox {
-        transform: scale(1.4);
-        margin-left: 0.5em;
-    }
-    .submit-btn {
-        background-color: #4caf50;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 4px;
-        color: white;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    .submit-btn:hover {
-        background-color: #45a049;
-    }
-</style>
-
-<h1>Administrator Management</h1>
+<style><?php include("../janus-style/janus-style.css"); ?></style>
 
 <div class="cards-grid">
     <?php foreach ($users as $user): ?>
@@ -95,17 +51,29 @@ if ($result) {
                 <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                 <div class="card-header">
                     <h2><?= htmlspecialchars($user['username']) ?></h2>
-                    <label>
-                        Admin?
+                    <label class="admin-label">
+                        &ensp;Admin?
                         <input type="checkbox" class="admin-checkbox" name="is_admin" <?= $user['is_admin'] ? 'checked' : '' ?>>
                     </label>
                 </div>
                 <p>Email: <?= htmlspecialchars($user['email']) ?></p>
-                <button type="submit" class="submit-btn">Update</button>
+                <div class="action-buttons">
+                    <button type="submit" class="submit-btn">Update</button>
+                    <button type="button" class="delete-btn" onclick="showConfirm(<?= $user['id'] ?>)">Delete</button>
+                    <button type="submit" name="action" value="delete" id="confirm-<?= $user['id'] ?>" class="confirm-delete-btn hidden">
+                        Are you sure to delete?
+                    </button>
+                </div>
             </form>
         </div>
     <?php endforeach; ?>
 </div>
+
+<script>
+    function showConfirm(id) {
+        document.getElementById('confirm-' + id).classList.remove('hidden');
+    }
+</script>
 
 <?php require_once '../janus-include/footer.php'; ?>
 
