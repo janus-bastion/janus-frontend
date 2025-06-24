@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = mysqli_real_escape_string($connexion, $_POST['username_or_email']);
     $pass = mysqli_real_escape_string($connexion, $_POST['password']);
 
-    // Recherche de l'utilisateur (par nom ou email)
     $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
     $stmt = mysqli_prepare($connexion, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $input, $input);
@@ -19,12 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user = mysqli_fetch_assoc($result);
 
         if (password_verify($pass, $user['password'])) {
-            $_SESSION['user'] = $user['username'];
-	    $_SESSION['is_admin'] = (int) $user['is_admin'];
 
-	    if ($user['username'] === 'janusadmin') {
-		$_SESSION['is_admin'] = 1;
-    		header("Location: /home");
+            if (isset($user['password_changed_at'])) {
+                $passwordChangedAt = strtotime($user['password_changed_at']);
+                $threeMonthsAgo = strtotime('-3 months');
+
+                if ($passwordChangedAt < $threeMonthsAgo) {
+                    $_SESSION['force_password_change'] = true;
+                    $_SESSION['user_id'] = $user['id'];
+                    header("Location: /changepassword");
+                    exit;
+                }
+            }
+
+            $_SESSION['user'] = $user['username'];
+            $_SESSION['is_admin'] = (int) $user['is_admin'];
+
+            if ($user['username'] === 'janusadmin') {
+                $_SESSION['is_admin'] = 1;
+                header("Location: /home");
                 exit;
             }
 

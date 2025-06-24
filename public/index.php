@@ -109,6 +109,15 @@ $app->post('/2faverifuser', function (Request $request, Response $response, $arg
     return $response;
 });
 
+$app->get('/changepassword', function (Request $request, Response $response, $args) {
+    $file = '/usr/share/nginx/html/janus-view/janus-change-pwd.php';
+    ob_start();
+    include($file);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+    return $response;
+});
+
 # ----------------------- #
 
 $app->post('/preauthprocess', function (Request $request, Response $response, $args) {
@@ -140,6 +149,15 @@ $app->post('/logoutprocess', function (Request $request, Response $response, $ar
 
 $app->post('/newconnectprocess', function (Request $request, Response $response, $args) {
     $fich = '/usr/share/nginx/html/janus-mdlw/janus-create-connect.php';
+    ob_start();
+    include($fich);
+    $output = ob_get_clean();
+    $response->getBody()->write($output);
+    return $response;
+});
+
+$app->post('/processchangepass', function (Request $request, Response $response, $args) {
+    $fich = '/usr/share/nginx/html/janus-mdlw/janus-change-pwd.php';
     ob_start();
     include($fich);
     $output = ob_get_clean();
