@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION['user'])) {
     header("Location: /login");
@@ -97,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
 
-            // Users Chart
             const usersCtx = document.getElementById('usersChart').getContext('2d');
             new Chart(usersCtx, {
                 type: 'bar',
@@ -123,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Connection Types Chart
             const connectionsCtx = document.getElementById('connectionsChart').getContext('2d');
             new Chart(connectionsCtx, {
                 type: 'doughnut',
@@ -157,11 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             position: 'bottom'
                         }
                     },
-                    scales: {} // Doughnut chart doesn't use scales
+                    scales: {}
                 }
             });
 
-            // Connections Over Time Chart
             const connectionsTimeCtx = document.getElementById('connectionsOverTimeChart').getContext('2d');
             new Chart(connectionsTimeCtx, {
                 type: 'line',
